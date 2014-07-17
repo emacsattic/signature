@@ -1,8 +1,5 @@
 ;;; Ruby language support for signature.
 
-(require 'eieio)
-(require 'signature)
-
 (defclass signature-ruby-class (signature-match-class)
  ((regexp :initform "^\s?+class\s+[a-z]+")))
 

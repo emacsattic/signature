@@ -1,5 +1,7 @@
 # Signature survey
 
+![Signatures][doc/img/screenshot.png]
+
 ## Installation
 
 Installation alternatives:
