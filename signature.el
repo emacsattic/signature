@@ -31,6 +31,8 @@
 (require 's)
 (require 'f)
 
+(require 'signature-ruby)
+
 ;; General language machinery
 
 (defvar signature-languages nil)
