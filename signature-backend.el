@@ -46,34 +46,34 @@
 
 (defun signature--parse-file (file)
  "Parse a FILE, returning a list of statistics and an ascii signature."
- (let ((parser (signature-parser-for-file file))
-       (class-count 0)
-       (method-count 0)
-       (line-count 0)
-       (stack nil)
-       (signature-string
+ (let* ((parser (signature-parser-for-file file))
+        (class-count 0)
+        (method-count 0)
+        (line-count 0)
+        (stack nil)
+        (signature-string
 
-        (with-output-to-string
-         (signature-with-source-file (file)
-          (signature-with-source-lines (line)
+         (with-output-to-string
+          (signature-with-source-file (file)
+           (signature-with-source-lines (line)
             
-           (let ((matcher (signature-match parser line)))
-            (when matcher
+            (let ((matcher (signature-match parser line)))
+             (when matcher
 
-             ;; Statistics:
-             (incf line-count)
-             (when (signature-class-p matcher) (incf class-count))
-             (when (signature-method-p matcher) (incf method-count))
+              ;; Statistics:
+              (incf line-count)
+              (when (signature-class-p matcher) (incf class-count))
+              (when (signature-method-p matcher) (incf method-count))
 
-             ;; Signature production:
-             (cond
-              ((signature-push-state-p matcher stack)
-               (princ (signature-marker-enter matcher))
-               (push matcher stack))
-              ((signature-pop-state-p matcher stack)
-               (when stack
-                (princ (signature-marker-exit (pop stack)))))
-              (t (princ (signature-marker matcher)))))))))))
+              ;; Signature production:
+              (cond
+               ((signature-push-state-p matcher stack)
+                (princ (signature-marker-enter matcher))
+                (push matcher stack))
+               ((signature-pop-state-p matcher stack)
+                (when stack
+                 (princ (signature-marker-exit (pop stack)))))
+               (t (princ (signature-marker matcher)))))))))))
 
   (list class-count method-count line-count signature-string)))
 
