@@ -1,7 +1,10 @@
 ;;; signature-backend.el --- Basic wireing
 
 ;;; Commentary:
-;; 
+
+;; Reading of files, determining which parser to use, picking matcher
+;; for current source line and building signature using the available
+;; machinery. this is where it comes to gether.
 
 ;;; Code:
 
