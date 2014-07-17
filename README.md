@@ -1,6 +1,6 @@
 # Signature survey
 
-![Signatures][https://github.com/pidu/signature/blob/master/doc/img/screenshot.png]
+![Signatures](doc/img/screenshot.png)
 
 ## Installation
 
