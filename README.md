@@ -1,4 +1,4 @@
-# Signature survey
+# Signature Survey
 
 Generate a signature survey for a glob pattern of your ruby project.
 Only ruby supported so far and support is spotty because of ruby's
