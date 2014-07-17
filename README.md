@@ -15,12 +15,13 @@ Inspired by: http://c2.com/doc/SignatureSurvey.
 - ' denotes comments
 - . denotes other types of rows
 
-Only ruby supported so far, and support is spotty at best, but this is
-proof of concept code. I want to make it possible to navigate to the
-files through the `*signature*` buffer. And add some highlighting.
+This is proof of concept code to determine usefulness of approach. I
+want to make it possible to navigate to the files through the
+`*signature*` buffer. And add some highlighting in the report buffer.
 
-Other languages would be nice as well. javascript and coffeescript
-would probably be first.
+Other languages would be nice as well. Javascript and Coffeescript
+would probably be first up. If one could ride on top of semantic that
+would be nice as well but I'm not familiar enough with it.
 
 ## Installation
 
