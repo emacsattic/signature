@@ -1,3 +1,11 @@
+;;; signature-interface.el --- External interface
+
+;;; Commentary:
+
+;; The signature-report is the main entry to signature.
+
+;;; Code:
+
 ;;;###autoload
 (defun signature-report ()
  "Report on signatures for files matching a glob."
@@ -15,3 +23,5 @@
    (switch-to-buffer "*signature*"))))
 
 (provide 'signature-interface)
+
+;;; signature-interface.el ends here

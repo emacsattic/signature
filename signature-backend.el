@@ -1,14 +1,24 @@
+;;; signature-backend.el --- Basic wireing
+
+;;; Commentary:
+;; 
+
+;;; Code:
+
 (cl-defmacro signature-with-source-file ((file) &body body)
+ "Executes BODY as lines from FILE with the variable LINES bound to the lines of the file."
  `(with-temp-buffer
    (insert-file-contents ,file)
    (let ((lines (split-string (buffer-string) "\n" t)))
     ,@body)))
 
 (cl-defmacro signature-with-source-lines ((line) &body body)
+ "Iterate over LINES binding each one to LINE and executing BODY."
  `(dolist (,line lines)
    ,@body))
 
 (defun signature-parser-for-file (file)
+ "Determine parser (language implementation) by matching extension of FILE with the languages defined extension."
  (cl-find-if
   (lambda (language)
    (with-slots (extension) language
@@ -16,6 +26,7 @@
   signature-languages))
 
 (defun signature-match (parser line)
+ "Given a language PARSER and source code LINE, return a matcher."
  (cl-find-if
   (lambda (matcher)
    (with-slots (regexp) matcher
@@ -23,6 +34,7 @@
   (slot-value parser 'source-line-matchers)))
 
 (defun signature--parse-file (file)
+ "Parse a FILE, returning a list of statistics and an ascii signature."
  (let* ((class-count 0)
         (method-count 0)
         (line-count 0)
@@ -59,3 +71,5 @@
   (list class-count method-count line-count signature-string)))
 
 (provide 'signature-backend)
+
+;;; signature-backend.el ends here

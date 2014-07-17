@@ -1,4 +1,11 @@
-;;; Ruby language support for signature.
+;;; signature-ruby.el --- A signature language definition for Ruby
+
+;;; Commentary:
+
+;; A rather happy case implementation of a ruby language parser
+;; missing many bits and pieces but providing the basics:
+
+;;; Code:
 
 (defclass signature-ruby-class (signature-match-class)
  ((regexp :initform "^\s?+class\s+[a-z]+")))
@@ -37,8 +44,15 @@
     (make-instance 'signature-match-any)))))
 
 (defmethod signature-push-state-p ((m signature-ruby-conditional) stack)
+ "Do not push to stack for conditionals when STACK head contains
+a signature-ruby-switch. We loose a bit precision put gain the
+ability to match the case statements corresponding end."
  (or (null stack) (not (eql (class-of (car stack)) signature-ruby-switch))))
+
+;; Push definition onto the signature-languages list:
 
 (push (make-instance 'signature-ruby) signature-languages)
 
 (provide 'signature-ruby)
+
+;;; signature-ruby.el ends here

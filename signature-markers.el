@@ -1,3 +1,13 @@
+;;; signature-markers.el --- Visual markers.
+
+;;; Commentary:
+
+;; Visual markers to use for the various language constructs in the
+;; signature. This is how conditional, methods, loops etc get
+;; translated into the ascii signature.
+
+;;; Code:
+
 (defmethod signature-marker ((m signature-source-line-matcher))
  "How to denote a comment."
  "")
@@ -43,3 +53,5 @@
  "]")
 
 (provide 'signature-markers)
+
+;;; signature-markers.el ends here

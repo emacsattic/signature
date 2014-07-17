@@ -1,4 +1,4 @@
-;;; signature.el --- Signature survey
+;;; signature.el --- Signature Survey
 
 ;; Copyright (C) 2014  Peter Stiernström
 
@@ -22,14 +22,18 @@
 
 ;;; Commentary:
 
-;; Generate a signature survery from your code
+;; Generate a signature survery from your code.
 
 ;;; Code:
+
+;; External dependencies:
 
 (require 'eieio)
 (require 'cl)
 (require 's)
 (require 'f)
+
+;; Parts of signature:
 
 (require 'signature-api)
 (require 'signature-markers)
@@ -39,4 +43,5 @@
 (require 'signature-interface)
 
 (provide 'signature)
+
 ;;; signature.el ends here
