@@ -1,6 +1,6 @@
 # Signature survey
 
-![Signatures][doc/img/screenshot.png]
+![Signatures][./doc/img/screenshot.png]
 
 ## Installation
 
