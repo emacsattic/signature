@@ -9,7 +9,7 @@
 ;;; Code:
 
 (defmethod signature-marker ((m signature-source-line-matcher))
- "How to denote a comment."
+ "How to denote something non-descript."
  "")
 
 (defmethod signature-marker ((m signature-match-comment))
