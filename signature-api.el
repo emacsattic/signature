@@ -5,11 +5,11 @@
 ;; Language api, subclass the various class, and method matcher
 ;; classes and supply regular expressions to match a source code line.
 ;; Then put an instance of a subclass of signature-language onto
-;; signature-languages.
+;; signature--languages.
 
 ;;; Code:
 
-(defvar signature-languages nil
+(defvar signature--languages nil
  "This variable holds all parseable languages.")
 
 (defclass signature-language ()

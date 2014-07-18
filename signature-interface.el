@@ -40,7 +40,7 @@
   (let* ((glob (read-string "Glob: "))
          (boring-prefix (expand-file-name (car (split-string glob "*")))))
    (dolist (file (f-glob glob))
-    (insert (signature-render-file-name file boring-prefix))
+    (insert (signature--render-file-name file boring-prefix))
     (newline)
     (cl-multiple-value-bind (class-count method-count line-count signature-string) (signature--parse-file file)
      (insert (format "%dc\t%dm\t%dL" class-count method-count line-count))
