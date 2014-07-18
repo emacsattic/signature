@@ -3,7 +3,7 @@
 ;; Copyright (C) 2014  Peter Stiernström
 
 ;; Author: Peter Stiernström <peter@stiernstrom.se>
-;; Version: 0.1
+;; Version: 0.5
 ;; Package-Requires ((cl-lib "0.5") (s "1.9.0") (f "0.16.2"))
 ;; Keywords:
 
@@ -38,6 +38,7 @@
 (require 'signature-api)
 (require 'signature-markers)
 (require 'signature-stack)
+(require 'signature-display)
 (require 'signature-backend)
 (require 'signature-ruby)
 (require 'signature-interface)

@@ -50,32 +50,35 @@
         (class-count 0)
         (method-count 0)
         (line-count 0)
-        (stack nil)
-        (signature-string
+        (current-line 0)
+        (stack nil))
 
-         (with-output-to-string
-          (signature-with-source-file (file)
-           (signature-with-source-lines (line)
-            
-            (let ((matcher (signature-match parser line)))
-             (when matcher
+  (signature-with-source-file (file)
+   (with-temp-buffer
+    (signature-with-source-lines (line)
+     (let ((matcher (signature-match parser line)))
+      
+      (incf current-line)
+      (when matcher
+       
+       ;; Statistics:
+       (incf line-count)
+       (when (signature-class-p matcher) (incf class-count))
+       (when (signature-method-p matcher) (incf method-count))
 
-              ;; Statistics:
-              (incf line-count)
-              (when (signature-class-p matcher) (incf class-count))
-              (when (signature-method-p matcher) (incf method-count))
+       ;; Signature production:
+       (cond
+        ((signature-push-state-p matcher stack)
+         (insert (signature-render-signature-char (signature-marker-enter matcher) file current-line))
+         (push matcher stack))
+               
+        ((signature-pop-state-p matcher stack)
+         (when stack
+          (insert (signature-render-signature-char (signature-marker-exit (pop stack)) file current-line))))
+               
+        (t (insert (signature-render-signature-char (signature-marker matcher) file current-line)))))))
 
-              ;; Signature production:
-              (cond
-               ((signature-push-state-p matcher stack)
-                (princ (signature-marker-enter matcher))
-                (push matcher stack))
-               ((signature-pop-state-p matcher stack)
-                (when stack
-                 (princ (signature-marker-exit (pop stack)))))
-               (t (princ (signature-marker matcher)))))))))))
-
-  (list class-count method-count line-count signature-string)))
+    (list class-count method-count line-count (buffer-string))))))
 
 (provide 'signature-backend)
 
