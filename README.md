@@ -8,12 +8,14 @@ Inspired by: http://c2.com/doc/SignatureSurvey.
 
 ![Signatures](doc/img/screenshot.png)
 
-- <> denoted classes
-- {} denotes methods
-- [] denotes loops
-- () denotes conditionals
-- ' denotes comments
-- . denotes other types of rows
+- `<>` denoted classes
+- `{}` denotes methods
+- `[]` denotes loops
+- `()` denotes conditionals
+- `'` denotes comments
+- `.` denotes other types of rows
+
+For ruby there is also `|` which indicates a block.
 
 This is proof of concept code to determine usefulness of approach, it
 might benefit from some more elaborate highlighting.

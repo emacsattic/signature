@@ -22,8 +22,11 @@
 (defclass signature-ruby-conditional (signature-match-conditional)
  ((regexp :initform "^\s?+\\(if\\|when\\|unless\\)")))
 
+(defclass signature-ruby-block (signature-source-line-push-scope)
+ ((regexp :initform " do$")))
+
 (defclass signature-ruby-loop (signature-match-loop)
- ((regexp :initform "\\(for .* in\\|\.each\\| do$\\)")))
+ ((regexp :initform "\\(for .* in\\|\.each\\)")))
 
 (defclass signature-ruby-end (signature-source-line-pop-scope)
  ((regexp :initform "^\s?+end\s?+$")))
@@ -39,6 +42,7 @@
     (make-instance 'signature-ruby-switch)
     (make-instance 'signature-ruby-conditional)
     (make-instance 'signature-ruby-loop)
+    (make-instance 'signature-ruby-block)
     (make-instance 'signature-ruby-end)
     (make-instance 'signature-ruby-comment)
     (make-instance 'signature-match-any)))))
@@ -51,6 +55,14 @@ previous one."
   (not (signature-ruby-switch-p (car stack)))
   (and (signature-ruby-switch-p (car stack))
    (> identation (car indentation-stack)))))
+
+(defmethod signature--marker-enter ((m signature-ruby-block))
+ "Signature character representing entering a block."
+ "|")
+
+(defmethod signature--marker-exit ((m signature-ruby-block))
+ "Signature character representing exiting a block."
+ "|")
 
 ;; Push definition onto the signature--languages list:
 
