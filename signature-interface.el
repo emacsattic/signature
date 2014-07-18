@@ -6,15 +6,6 @@
 
 ;;; Code:
 
-(define-derived-mode signature-mode fundamental-mode "Signature")
-
-(defvar signature-mode-map
- (let ((map (make-sparse-keymap)))
-  (define-key map (kbd "M-.") 'signature-visit-location-at-point)
-  (define-key map (kbd "C-q") 'signature-quit)
-  map)
- "Keymap for command `signature-mode'.")
-
 (defun signature-quit ()
  "Kill signature buffer."
  (interactive)
@@ -28,7 +19,16 @@
   (when file
    (with-current-buffer (find-file file)
     (when line
-     (forward-line line))))))
+     (forward-line (1- line)))))))
+
+(defvar signature-mode-map
+ (let ((map (make-sparse-keymap)))
+  (define-key map (kbd "M-.") 'signature-visit-location-at-point)
+  (define-key map (kbd "C-q") 'signature-quit)
+  map)
+ "Keymap for command `signature-mode'.")
+
+(define-derived-mode signature-mode fundamental-mode "Signature")
 
 ;;;###autoload
 (defun signature-report ()

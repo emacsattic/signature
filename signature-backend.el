@@ -12,7 +12,7 @@
  "Executes BODY as lines from FILE with the variable LINES bound to the lines of the file."
  `(with-temp-buffer
    (insert-file-contents ,file)
-   (let ((lines (split-string (buffer-string) "\n" t)))
+   (let ((lines (split-string (buffer-string) "\n")))
     ,@body)))
 
 (cl-defmacro signature-with-source-lines ((line) &body body)
@@ -44,23 +44,31 @@
  "Determine if INSTANCE is a subclass of class symbol `signature-match-method'."
  (child-of-class-p (class-of instance) 'signature-match-method))
 
+(defun signature-indentation-level (line)
+ "Determines the indentation-level of a LINE."
+ (length (car (s-split "[^\s]+" line))))
+
 (defun signature--parse-file (file)
  "Parse a FILE, returning a list of statistics and an ascii signature."
  (let* ((parser (signature-parser-for-file file))
+        (indentation 0)
         (class-count 0)
         (method-count 0)
         (line-count 0)
         (current-line 0)
-        (stack nil))
+        (stack nil)
+        (indentation-stack nil))
 
   (signature-with-source-file (file)
    (with-temp-buffer
     (signature-with-source-lines (line)
+
+     (incf current-line)
+     (setq identation (signature-indentation-level line))
+
      (let ((matcher (signature-match parser line)))
-      
-      (incf current-line)
       (when matcher
-       
+
        ;; Statistics:
        (incf line-count)
        (when (signature-class-p matcher) (incf class-count))
@@ -70,12 +78,14 @@
        (cond
         ((signature-push-state-p matcher stack)
          (insert (signature-render-signature-char (signature-marker-enter matcher) file current-line))
-         (push matcher stack))
-               
+         (push matcher stack)
+         (push indentation indentation-stack))
+
         ((signature-pop-state-p matcher stack)
          (when stack
-          (insert (signature-render-signature-char (signature-marker-exit (pop stack)) file current-line))))
-               
+          (insert (signature-render-signature-char (signature-marker-exit (pop stack)) file current-line))
+          (pop indentation-stack)))
+
         (t (insert (signature-render-signature-char (signature-marker matcher) file current-line)))))))
 
     (list class-count method-count line-count (buffer-string))))))

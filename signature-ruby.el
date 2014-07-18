@@ -43,11 +43,22 @@
     (make-instance 'signature-ruby-comment)
     (make-instance 'signature-match-any)))))
 
+(defun signature-ruby-switch-p (instance)
+ "Predicate to answer if INSTANCE is a ruby switch matcher."
+ (eql (class-of instance) signature-ruby-switch))
+
+(defun signature-ruby-conditional-p (instance)
+ "Predicate to answer if INSTANCE is a ruby conditional matcher."
+ (eql (class-of instance) signature-ruby-conditional))
+
 (defmethod signature-push-state-p ((m signature-ruby-conditional) stack)
  "Do not push to stack for conditionals when STACK head contains
-a signature-ruby-switch. We loose a bit precision put gain the
-ability to match the case statements corresponding end."
- (or (null stack) (not (eql (class-of (car stack)) signature-ruby-switch))))
+a signature-ruby-switch unless current indentation is larger than
+previous one."
+ (or (null stack)
+  (not (signature-ruby-switch-p (car stack)))
+  (and (signature-ruby-switch-p (car stack))
+   (> identation (car indentation-stack)))))
 
 ;; Push definition onto the signature-languages list:
 
