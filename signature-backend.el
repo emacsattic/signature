@@ -63,8 +63,8 @@
 
        ;; Statistics:
        (incf line-count)
-       (when (signature-match-class-p matcher) (incf class-count))
-       (when (signature-match-method-p matcher) (incf method-count))
+       (when (signature-match-class-child-p matcher) (incf class-count))
+       (when (signature-match-method-child-p matcher) (incf method-count))
 
        ;; Signature production:
        (cond
